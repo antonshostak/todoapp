@@ -8,18 +8,7 @@ class Post extends Component{
         this.props.deletePost(this.props.post.id);
         this.props.history.push('/')
     }
-    // state = {
-    //     post: null
-    // }
-    // componentDidMount(){
-    //     let id = this.props.match.params.post_id;
-    //     axios.get('https://jsonplaceholder.typicode.com/posts/'+id)
-    //         .then(res =>{
-    //             this.setState({
-    //                 post: res.data
-    //             })
-    //         })
-    // }
+
     render(){
         const post = this.props.post ? (
             <div className="post">

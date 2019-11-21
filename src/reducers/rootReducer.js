@@ -18,6 +18,10 @@ const initState = {
             "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
             "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
         }
+    ],
+    todos: [
+        {id: 1, content: 'buy some milk'},
+        {id: 2, content: 'play Mario'}
     ]
 }
 
@@ -27,6 +31,20 @@ const rootReducer = (state = initState,action) => {
         return {
             ...state,
             posts: newPosts
+        }
+    }
+    if (action.type === 'DELETE_TODO'){
+        let newTodos = state.todos.filter(todo=> todo.id !== action.id);
+        return {
+            ...state,
+            todos: newTodos
+        }
+    }
+    if (action.type === 'ADD_TODO'){
+        let newTodos = [...state.todos,action.todo];
+        return {
+            ...state,
+            todos: newTodos
         }
     }
     return state;

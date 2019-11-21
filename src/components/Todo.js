@@ -1,32 +1,30 @@
 import React, {Component} from 'react'
 import Todos from "./Todos";
 import AddTodo from "./addTodo";
+import { connect } from 'react-redux'
+import { deleteTodo } from '../actions/todoActions'
+import { addTodo } from '../actions/todoActions'
 
 class Todo extends Component {
-    state = {
-        todos: [
-            {id: 1, content: 'buy some milk'},
-            {id: 2, content: 'play Mario'}
-        ]
-    }
-    deleteTodo = (id) => {
-        const todos = this.state.todos.filter(todo => {
-            return todo.id !== id;
-        });
-        this.setState({todos});
-    }
-
+    // deleteTodo = (id) => {
+    //     const todos = this.state.todos.filter(todo => {
+    //         return todo.id !== id;
+    //     });
+    //     this.setState({todos});
+    // }
+    //
     addTodo = (todo) => {
         todo.id = Math.random();
-        let todos = [...this.state.todos, todo];
-        this.setState({todos});
+        this.props.addTodo(todo);
+        // let todos = [...this.state.todos, todo];
+        // this.setState({todos});
     }
 
     render() {
         return (
             <div className="todo-app container">
                 <h1 className="center blue-text">Todo`s</h1>
-                <Todos todos={this.state.todos} deleteTodo={this.deleteTodo}/>
+                <Todos todos={this.props.todos} deleteTodo={this.props.deleteTodo} />
                 <AddTodo addTodo={this.addTodo}/>
 
 
@@ -34,4 +32,19 @@ class Todo extends Component {
         );
     }
 }
-export default Todo
+const mapStateToProps = (state) => {
+    return {
+        todos : state.todos
+    }
+}
+const dispatchToProps = (dispatch) => {
+    return {
+        deleteTodo: (id) => {
+            dispatch(deleteTodo(id))
+        },
+        addTodo: (todo)=> {
+            dispatch(addTodo(todo));
+        }
+    }
+}
+export default connect(mapStateToProps,dispatchToProps)(Todo)
